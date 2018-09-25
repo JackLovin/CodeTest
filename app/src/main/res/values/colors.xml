@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <color name="colorAccent">#2595e1</color>
+    <color name="colorPrimary">#7cb342</color>
+    <color name="colorPrimaryDark">#689f38</color>
+
+    <color name="dialog_bg">#F5F5F5F5</color>
+    <color name="dialog_lable_text">#CC33B5E5</color>
+    <color name="dialog_device_view">#DCDCDCDC</color>
+    <color name="white">#ffffffff</color>
+    <color name="black">#CC000000</color>
+    <color name="dialog_button_press">#CC81CFEB</color>
+    <color name="dialog_button">#00000000</color>
+    <color name="transparent">#B000</color>
+
+    <color name="changetrue">#ececec</color>
+    <color name="changefalse">#dcdcdc</color>
+    <color name="fulltransparent">#0fff</color>
+
+    <color name="dialogbackground">#00000000</color>
+    <!--主界面背景色-->
+    <color name="bg_color">#f5f5f9</color>
+
+    <color name="text">#ff6e6e6e</color>
+    <color name="regBackGround">#ffd2d6d7</color>
+    <color name="key_white">#fffafafb</color>
+
+    <color name="input_title_text_color">#ff3d4245</color>
+    <color name="input_edit_hint_color">#ffffebeb</color>
+    <color name="red">#ffff0000</color>
+    <color name="jx_bg">#91C151</color>
+    <color name="keyboard_key_text_color">#ff4f5152</color>
+    <!--交易图标背景色-->
+    <color name="trade_consume">#2595e1</color>
+    <color name="trade_undo">#4ad486</color>
+    <color name="trade_returnGoods">#ff6600</color>
+    <color name="trade_warrant">#cd3301</color>
+    <color name="trade_eCash">#25cbc1</color>
+    <color name="trade_installment">#f39501</color>
+    <color name="trade_printer">#cc33cc</color>
+    <color name="trade_balanceQuery">#fd8185</color>
+    <color name="trade_manager">#5569b2</color>
+    <!--管理图标背景色-->
+    <color name="manager_pos_sign">#14b8d4</color>
+    <color name="manager_pos_download_mkey">#4ad486</color>
+    <color name="manager_transaction_query">#cc3301</color>
+    <color name="manager_system">#ff6600</color>
+    <color name="manager_settle">#cc33cc</color>
+    <color name="manager_sign_out">#ff3366</color>
+    <color name="manager_version_info">#714b29</color>
+
+    <!--系统管理图标背景色-->
+    <color name="system_manager_connect">#2c5f8c</color>
+    <color name="system_manager_merchants">#90a930</color>
+    <color name="system_manager_communication_parameters">#714b29</color>
+    <color name="system_manager_end_key">#e48600</color>
+    <color name="system_manager_sys_parameters">#c03a00</color>
+    <color name="system_manager_password_change">#7e5ca8</color>
+    <color name="system_manager_clearing_transactions">#526db0</color>
+    <color name="system_manager_parameters_download">#6a4400</color>
+    <color name="system_manager_settings">#008f17</color>
+    <color name="system_version_settings">#ecaa10</color>
+
+    <!--预授权图标背景色-->
+    <color name="pre_auth">#28abe3</color>
+    <color name="pre_auth_finish">#0eceab</color>
+    <color name="pre_auth_finish_inform">#72bf48</color>
+    <color name="pre_auth_cancel">#fb6900</color>
+    <color name="pre_auth_cancel_inform">#9b59b6</color>
+
+    <!--电子现金图标背景色-->
+    <color name="ec_load_inner">#69a8d4</color>
+    <color name="ec_normal_pay">#9aba3d</color>
+    <color name="ec_quick_pay">#dfaf40</color>
+    <color name="ec_off_refund">#e84f3f</color>
+    <color name="ec_details">#219b82</color>
+    <color name="ec_query">#5569b2</color>
+
+    <!--打印业务图标背景色-->
+    <color name="print_repeat_settle">#c22140</color>
+    <color name="print_repeat_trans">#e96d25</color>
+    <color name="print_repeat_last">#1aa456</color>
+    <color name="print_repeat_bat">#034582</color>
+    <color name="print_repeat_detail">#00b0df</color>
+
+    <!--终端秘钥管理图标背景色-->
+    <color name="key_manager_download">#fb8102</color>
+    <color name="key_manager_index">#509600</color>
+    <color name="key_manager_hand">#bf4036</color>
+
+    <!--清除交易图标背景色-->
+    <color name="clear_reversal">#db532d</color>
+    <color name="clear_transaction">#0095a9</color>
+
+    <!--参数下载图标背景色-->
+    <color name="download_public_key">#b01a40</color>
+    <color name="download_aid">#2d89f0</color>
+
+    <!--分期业务图标背景色-->
+    <color name="installments_payment">#dd630d</color>
+    <color name="installments_lump_sum_payment">#6ab22a</color>
+
+    <color name="installments_payment_second">#009ab5</color>
+    <color name="installments_payment_cancel">#aab22a</color>
+
+
+    <!-- 边框色 -->
+    <color name="bg_gray">#e3e3e3</color>
+    <!-- 划过的颜色 -->
+    <color name="up_color">#f4f8eb</color>
+    <!-- 系统管理选中功能的颜色 -->
+    <color name="sys_settings_press">#EDEDED</color>
+    <!-- 文字颜色-->
+    <color name="text_color">#3b3c3f</color>
+    <!-- 不重要的文字 -->
+    <color name="text_no_color">#b5b5b5</color>
+
+    <!-- 标题颜色-->
+    <color name="title_text_color">#484848</color>
+    <color name="text_color_black_light">#484848</color>
+    <color name="gray">#e0e0e0</color>
+    <color name="dark_gray">#a1a4a4</color>
+    <color name="hint_gray">#d0d0d0</color>
+
+    <!-- QRCode scanner color begin -->
+    <color name="result_view">#B0000000</color>
+    <color name="result_point_color">#C0FFFF00</color>
+    <color name="laser_color">#0F0</color>
+    <color name="corner_color">#00FF00</color>
+    <!-- QRCode scanner color end -->
+    <color name="viewfinder_frame">#ff000000</color>
+    <color name="viewfinder_laser">#ffff0000</color>
+    <color name="viewfinder_mask">#60000000</color>
+
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="status_text">#ffffffff</color>
+
+
+    <color name="font_common_1">#424242</color>
+    <color name="font_common_2">#a1a1a1</color>
+    <color name="font_blue">#42369a</color>
+    <color name="commom_background">#f3f3f3</color>
+</resources>
