@@ -29,6 +29,7 @@
             android:name=".qrcod.activity.CaptureActivity"
             android:launchMode="singleTask" />
         <activity android:name=".codeaty.CodeActivity" />
+        <activity android:name=".codeaty.RecycviewBitmapAty"></activity>
     </application>
 
 </manifest>

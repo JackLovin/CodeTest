@@ -5,6 +5,10 @@ import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
 import android.os.Environment;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -15,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,9 +34,9 @@ import testdemo.sunyard.com.util.QRCodeUtil;
 
 public class CodeActivity extends Activity implements View.OnClickListener {
     ImageView imageView;
- Button btnRed,btnBule,btnCYAN,btnDKGRAY,btnLTGRAY,btnMAGENTA,btnYELLOW,btnGREEN;
+    Button btnRed, btnBule, btnCYAN, btnDKGRAY, btnLTGRAY, btnMAGENTA, btnYELLOW, btnGREEN;
     int Degree;
-    Button btnLeftRight,btnLight;
+    Button btnLeftRight, btnLight;
     String s;
     boolean isScaleY = false;
     Button btnCreateCode, btnCreateColorCode, btnTop, btnIntent, btnIntroduce;
@@ -40,6 +45,8 @@ public class CodeActivity extends Activity implements View.OnClickListener {
     EditText editText;
     String choseCode;
     private static final String TAG = "CodeActivity";
+    private SeekBar ContrastseekBar = null;
+    private int imgHeight, imgWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +54,6 @@ public class CodeActivity extends Activity implements View.OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         initData();
-
         Intent intent = getIntent();
         choseCode = intent.getStringExtra("choseCode");
         textView.setText(choseCode);
@@ -56,84 +62,122 @@ public class CodeActivity extends Activity implements View.OnClickListener {
         } else {
             btnCreateColorCode.setVisibility(View.GONE);
         }
-        showCodeColor(choseCode,0xff000000);
+        showCodeColor(choseCode, 0xff000000);
+
+        ContrastseekBar = (SeekBar) findViewById(R.id.contrastseekbar);
+        imgHeight = bitmap.getHeight();
+        imgWidth = bitmap.getWidth();
+
+
+        ContrastseekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                Bitmap bmp = Bitmap.createBitmap(imgWidth, imgHeight, Bitmap.Config.ARGB_8888);
+// int brightness = progress - 127;  
+                float contrast = (float) ((progress + 64) / 128.0);
+                ColorMatrix cMatrix = new ColorMatrix();
+                cMatrix.set(new float[]{contrast, 0, 0, 0, 0, 0, contrast, 0, 0, 0,// 改变对比度  
+                        0, 0, contrast, 0, 0, 0, 0, 0, 1, 0});
+                Paint paint = new Paint();
+                paint.setColorFilter(new ColorMatrixColorFilter(cMatrix));
+                Canvas canvas = new Canvas(bmp);
+// 在Canvas上绘制一个已经存在的Bitmap。这样，dstBitmap就和srcBitmap一摸一样了  
+                canvas.drawBitmap(bitmap, 0, 0, paint);
+
+                imageView.setImageBitmap(bmp);
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
 
 
     }
 
-    private  void showCodeColor(String choseCode,int color){
+    private void showCodeColor(String choseCode, int color) {
         switch (choseCode) {
             case "QR_CODE":
-                bitmap = QRCodeUtil.createQRImage("hello world", color,BarcodeFormat.QR_CODE, 500, 300, null, null);
+                bitmap = QRCodeUtil.createQRImage("hello world", color, BarcodeFormat.QR_CODE, 500, 300, null, null);
                 tvCodeContent.setText("hello world");
                 imageView.setImageBitmap(bitmap);
                 break;
             case "CODE_128":
-                bitmap = QRCodeUtil.createMultiFormatImage("hello world",color, BarcodeFormat.CODE_128, 500, 300, null, null);
+                bitmap = QRCodeUtil.createMultiFormatImage("hello world", color, BarcodeFormat.CODE_128, 500, 300, null, null);
                 tvCodeContent.setText("hello world");
                 imageView.setImageBitmap(bitmap);
                 break;
             case "EAN_13":
-                bitmap = QRCodeUtil.createEAN13WriterImage("6901234567892",color, BarcodeFormat.EAN_13, 500, 300, null, null);
+                bitmap = QRCodeUtil.createEAN13WriterImage("6901234567892", color, BarcodeFormat.EAN_13, 500, 300, null, null);
                 tvCodeContent.setText("6901234567892");
                 imageView.setImageBitmap(bitmap);
                 break;
             case "EAN_8":
 
-                bitmap = QRCodeUtil.createEAN8WriterImage("47112346",color, BarcodeFormat.EAN_8, 500, 300, null, null);
+                bitmap = QRCodeUtil.createEAN8WriterImage("47112346", color, BarcodeFormat.EAN_8, 500, 300, null, null);
                 tvCodeContent.setText("47112346");
                 imageView.setImageBitmap(bitmap);
                 break;
 
             case "CODABAR":
 
-                bitmap = QRCodeUtil.createMultiFormatImage("1234456",color, BarcodeFormat.CODABAR, 500, 300, null, null);
+                bitmap = QRCodeUtil.createMultiFormatImage("1234456", color, BarcodeFormat.CODABAR, 500, 300, null, null);
                 tvCodeContent.setText("1234456");
                 imageView.setImageBitmap(bitmap);
                 break;
             case "UPC_E":
-                bitmap = QRCodeUtil.createUPC_EImage("1234560", color,BarcodeFormat.UPC_E, 500, 300, null, null);
+                bitmap = QRCodeUtil.createUPC_EImage("1234560", color, BarcodeFormat.UPC_E, 500, 300, null, null);
                 tvCodeContent.setText("1234560");
                 imageView.setImageBitmap(bitmap);
                 break;
             case "UPC_A":
-                bitmap = QRCodeUtil.createUPC_AImage("12345678321",color, BarcodeFormat.UPC_A, 500, 300, null, null);
+                bitmap = QRCodeUtil.createUPC_AImage("12345678321", color, BarcodeFormat.UPC_A, 500, 300, null, null);
                 tvCodeContent.setText("12345678321");
                 imageView.setImageBitmap(bitmap);
                 break;
             case "ITF":
-                bitmap = QRCodeUtil.createITFImage("0053611912",color, BarcodeFormat.ITF, 500, 300, null, null);
+                bitmap = QRCodeUtil.createITFImage("0053611912", color, BarcodeFormat.ITF, 500, 300, null, null);
                 tvCodeContent.setText("0053611912");
                 imageView.setImageBitmap(bitmap);
                 break;
 
             case "CODE_39":
-                bitmap = QRCodeUtil.createcode39Image("ABC123", color,BarcodeFormat.CODE_39, 500, 300, null, null);
+                bitmap = QRCodeUtil.createcode39Image("ABC123", color, BarcodeFormat.CODE_39, 500, 300, null, null);
                 tvCodeContent.setText("ABC123");
                 imageView.setImageBitmap(bitmap);
                 break;
             case "CODE_93":
-                bitmap = QRCodeUtil.createcode93Image("1234567890",color, BarcodeFormat.CODE_93, 500, 300, null, null);
+                bitmap = QRCodeUtil.createcode93Image("1234567890", color, BarcodeFormat.CODE_93, 500, 300, null, null);
                 tvCodeContent.setText("1234567890");
                 imageView.setImageBitmap(bitmap);
                 break;
             case "PDF_417":
-                bitmap = QRCodeUtil.createPDF417Image("0123aB",color, BarcodeFormat.PDF_417, 500, 300, null, null);
+                bitmap = QRCodeUtil.createPDF417Image("0123aB", color, BarcodeFormat.PDF_417, 500, 300, null, null);
                 tvCodeContent.setText("0123aB");
                 imageView.setImageBitmap(bitmap);
                 break;
         }
     }
+
     private void initData() {
-        btnLight=findViewById(R.id.btn_light);
-        btnRed=findViewById(R.id.btn_red);
-        btnBule=findViewById(R.id.btn_blue);
-        btnYELLOW=findViewById(R.id.btn_yellow);
-        btnGREEN=findViewById(R.id.btn_green);
-        btnDKGRAY=findViewById(R.id.btn_dkgray);
-        btnLTGRAY=findViewById(R.id.btn_ltggay);
-        btnCYAN=findViewById(R.id.btn_cyan);
-        btnMAGENTA=findViewById(R.id.btn_magenta);
+        btnLight = findViewById(R.id.btn_light);
+        btnRed = findViewById(R.id.btn_red);
+        btnBule = findViewById(R.id.btn_blue);
+        btnYELLOW = findViewById(R.id.btn_yellow);
+        btnGREEN = findViewById(R.id.btn_green);
+        btnDKGRAY = findViewById(R.id.btn_dkgray);
+        btnLTGRAY = findViewById(R.id.btn_ltggay);
+        btnCYAN = findViewById(R.id.btn_cyan);
+        btnMAGENTA = findViewById(R.id.btn_magenta);
         btnLight.setOnClickListener(this);
         btnRed.setOnClickListener(this);
         btnBule.setOnClickListener(this);
@@ -160,6 +204,7 @@ public class CodeActivity extends Activity implements View.OnClickListener {
         btnCreateCode.setOnClickListener(this);
         btnLeftRight.setOnClickListener(this);
     }
+
     private void setWindowBrightness(int brightness) {
         Window window = getWindow();
         WindowManager.LayoutParams lp = window.getAttributes();
@@ -167,7 +212,7 @@ public class CodeActivity extends Activity implements View.OnClickListener {
         window.setAttributes(lp);
     }
 
-int brightness;
+    int brightness;
 
     @Override
     public void onClick(View view) {
@@ -175,43 +220,43 @@ int brightness;
 
             case R.id.btn_light:
 
-                if(brightness>100){
-                    brightness=0;
+                if (brightness > 100) {
+                    brightness = 0;
                     return;
-                }else {
-                    brightness=brightness+20;
+                } else {
+                    brightness = brightness + 20;
                     setWindowBrightness(brightness);
                 }
                 break;
             case R.id.btn_red:
-                showCodeColor(choseCode,0xffff0000);
+                showCodeColor(choseCode, 0xffff0000);
 
                 break;
 
             case R.id.btn_blue:
-                showCodeColor(choseCode,0xff0000ff);
+                showCodeColor(choseCode, 0xff0000ff);
                 break;
 
             case R.id.btn_yellow:
-                showCodeColor(choseCode,0xffffff00);
+                showCodeColor(choseCode, 0xffffff00);
                 break;
 
             case R.id.btn_dkgray:
-                showCodeColor(choseCode,0xff444444);
+                showCodeColor(choseCode, 0xff444444);
                 break;
             case R.id.btn_ltggay:
-                showCodeColor(choseCode,0xffcccccc);
+                showCodeColor(choseCode, 0xffcccccc);
                 break;
 
             case R.id.btn_magenta:
-                showCodeColor(choseCode,0xffff00ff);
+                showCodeColor(choseCode, 0xffff00ff);
                 break;
 
             case R.id.btn_cyan:
-                showCodeColor(choseCode,0xff00ffff);
+                showCodeColor(choseCode, 0xff00ffff);
                 break;
             case R.id.btn_green:
-                showCodeColor(choseCode,0xff00ff00);
+                showCodeColor(choseCode, 0xff00ff00);
                 break;
             case R.id.btn_left:
                 if (isScaleY) {
@@ -221,7 +266,6 @@ int brightness;
                     imageView.setScaleX(1);
                     isScaleY = true;
                 }
-
 
 
                 break;
@@ -260,14 +304,15 @@ int brightness;
                 break;
 
             case R.id.create_colorcode:
-                s = editText.getText().toString(); if (s.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "please input content", Toast.LENGTH_SHORT).show();
-                return;
-            } else {
+                s = editText.getText().toString();
+                if (s.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "please input content", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
 
-                showCoad(choseCode, "color");
-                imageView.setImageBitmap(bitmap);
-            }
+                    showCoad(choseCode, "color");
+                    imageView.setImageBitmap(bitmap);
+                }
                 break;
 
         }
@@ -366,70 +411,70 @@ int brightness;
                         e.printStackTrace();
                     }
                 } else {
-                    bitmap = QRCodeUtil.createQRImage(s,0xff000000, BarcodeFormat.QR_CODE, 500, 300, null, null);
+                    bitmap = QRCodeUtil.createQRImage(s, 0xff000000, BarcodeFormat.QR_CODE, 500, 300, null, null);
                 }
                 imageView.setImageBitmap(bitmap);
                 tvCodeContent.setText(s);
                 break;
             case "CODE_128":
                 //  bitmap = QRCodeUtil.createMultiFormatImage("hello world", BarcodeFormat.CODE_128, 500, 300, null, null);
-                bitmap = QRCodeUtil.createMultiFormatImage(s,0xff000000, BarcodeFormat.CODE_128, 500, 300, null, null);
+                bitmap = QRCodeUtil.createMultiFormatImage(s, 0xff000000, BarcodeFormat.CODE_128, 500, 300, null, null);
                 imageView.setImageBitmap(bitmap);
                 tvCodeContent.setText(s);
                 break;
             case "EAN_13":
                 //  bitmap = QRCodeUtil.createEAN13WriterImage("6901234567892", BarcodeFormat.EAN_13, 500, 300, null, null);
-                bitmap = QRCodeUtil.createEAN13WriterImage(s, 0xff000000,BarcodeFormat.EAN_13, 500, 300, null, null);
+                bitmap = QRCodeUtil.createEAN13WriterImage(s, 0xff000000, BarcodeFormat.EAN_13, 500, 300, null, null);
                 imageView.setImageBitmap(bitmap);
                 tvCodeContent.setText(s);
                 break;
             case "EAN_8":
                 //  bitmap = QRCodeUtil.createEAN8WriterImage("47112346", BarcodeFormat.EAN_8, 500, 300, null, null);
-                bitmap = QRCodeUtil.createEAN8WriterImage(s, 0xff000000,BarcodeFormat.EAN_8, 500, 300, null, null);
+                bitmap = QRCodeUtil.createEAN8WriterImage(s, 0xff000000, BarcodeFormat.EAN_8, 500, 300, null, null);
                 imageView.setImageBitmap(bitmap);
                 tvCodeContent.setText(s);
                 break;
 
             case "CODABAR":
                 //  bitmap = QRCodeUtil.createMultiFormatImage("1234456", BarcodeFormat.CODABAR, 500, 300, null, null);
-                bitmap = QRCodeUtil.createMultiFormatImage(s,0xff000000, BarcodeFormat.CODABAR, 500, 300, null, null);
+                bitmap = QRCodeUtil.createMultiFormatImage(s, 0xff000000, BarcodeFormat.CODABAR, 500, 300, null, null);
                 imageView.setImageBitmap(bitmap);
                 tvCodeContent.setText(s);
                 break;
             case "UPC_E":
                 // bitmap = QRCodeUtil.createUPC_EImage("1234560", BarcodeFormat.UPC_E, 500, 300, null, null);
-                bitmap = QRCodeUtil.createUPC_EImage(s, 0xff000000,BarcodeFormat.UPC_E, 500, 300, null, null);
+                bitmap = QRCodeUtil.createUPC_EImage(s, 0xff000000, BarcodeFormat.UPC_E, 500, 300, null, null);
                 imageView.setImageBitmap(bitmap);
                 tvCodeContent.setText(s);
                 break;
             case "UPC_A":
                 // bitmap = QRCodeUtil.createUPC_AImage("12345678321", BarcodeFormat.UPC_A, 500, 300, null, null);
-                bitmap = QRCodeUtil.createUPC_AImage(s, 0xff000000,BarcodeFormat.UPC_A, 500, 300, null, null);
+                bitmap = QRCodeUtil.createUPC_AImage(s, 0xff000000, BarcodeFormat.UPC_A, 500, 300, null, null);
                 imageView.setImageBitmap(bitmap);
                 tvCodeContent.setText(s);
                 break;
             case "ITF":
                 //  bitmap = QRCodeUtil.createITFImage("0053611912", BarcodeFormat.ITF, 500, 300, null, null);
-                bitmap = QRCodeUtil.createITFImage(s,0xff000000, BarcodeFormat.ITF, 500, 300, null, null);
+                bitmap = QRCodeUtil.createITFImage(s, 0xff000000, BarcodeFormat.ITF, 500, 300, null, null);
                 imageView.setImageBitmap(bitmap);
                 tvCodeContent.setText(s);
                 break;
 
             case "CODE_39":
                 //   bitmap = QRCodeUtil.createcode39Image("ABC123", BarcodeFormat.CODE_39, 500, 300, null, null);
-                bitmap = QRCodeUtil.createcode39Image(s,0xff000000, BarcodeFormat.CODE_39, 500, 300, null, null);
+                bitmap = QRCodeUtil.createcode39Image(s, 0xff000000, BarcodeFormat.CODE_39, 500, 300, null, null);
                 imageView.setImageBitmap(bitmap);
                 tvCodeContent.setText(s);
                 break;
             case "CODE_93":
                 // bitmap = QRCodeUtil.createcode93Image("1234567890", BarcodeFormat.CODE_93, 500, 300, null, null);
-                bitmap = QRCodeUtil.createcode93Image(s, 0xff000000,BarcodeFormat.CODE_93, 500, 300, null, null);
+                bitmap = QRCodeUtil.createcode93Image(s, 0xff000000, BarcodeFormat.CODE_93, 500, 300, null, null);
                 imageView.setImageBitmap(bitmap);
                 tvCodeContent.setText(s);
                 break;
             case "DATA_MATRIX":
                 //  bitmap = QRCodeUtil.createDATA_MATRIXImage("ABC123450", BarcodeFormat.DATA_MATRIX, 500, 300, null, null);
-                bitmap = QRCodeUtil.createDATA_MATRIXImage(s,0xff000000, BarcodeFormat.DATA_MATRIX, 500, 300, null, null);
+                bitmap = QRCodeUtil.createDATA_MATRIXImage(s, 0xff000000, BarcodeFormat.DATA_MATRIX, 500, 300, null, null);
                 imageView.setImageBitmap(bitmap);
                 tvCodeContent.setText(s);
                 break;

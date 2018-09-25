@@ -11,18 +11,21 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
+import android.widget.SeekBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import testdemo.sunyard.com.adapter.ListRecycleViewAdapter;
 import testdemo.sunyard.com.codeaty.CodeActivity;
+import testdemo.sunyard.com.codeaty.RecycviewBitmapAty;
 import testdemo.sunyard.com.util.DividerItemDecoration;
 
 public class ChoseCodeAty extends Activity implements OnItemClickListener {
     RecyclerView mRecyclerView;
     List<String> stringList;
     Intent intent;
+
     private ListRecycleViewAdapter listRecycleViewAdapter;
 
     @Override
@@ -49,6 +52,7 @@ public class ChoseCodeAty extends Activity implements OnItemClickListener {
       //  stringList.add("RSS_EXPANDED");
         stringList.add("UPC_A");
         stringList.add("UPC_E");
+        stringList.add("other");
       //  stringList.add("UPC_EAN_EXTENSION");
         mRecyclerView = findViewById(R.id.recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -117,8 +121,10 @@ public class ChoseCodeAty extends Activity implements OnItemClickListener {
             case "RSS_14":
 
                 break;
-            case "RSS_EXPANDED":
-
+            case "other":
+                intent = new Intent(this, RecycviewBitmapAty.class);
+              //  intent.putExtra("choseCode", "UPC_A");
+                startActivity(intent);
                 break;
             case "UPC_A":
                 intent = new Intent(this, CodeActivity.class);

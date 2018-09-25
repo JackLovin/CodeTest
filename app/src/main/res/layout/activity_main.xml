@@ -75,7 +75,30 @@
         android:layout_centerInParent="true"
         android:src="@drawable/ic_launcher" />
 
+                <!-- 定义一个拖动条，并改变它的滑块外观 -->  
+                
+
+<LinearLayout
+    android:layout_above="@+id/ll_color"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+        android:text="对比度"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <SeekBar
+        android:id="@+id/contrastseekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progress="20"
+        android:max="100"
+        />
+</LinearLayout>
+
     <LinearLayout
+        android:id="@+id/ll_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/bomll"
@@ -84,57 +107,57 @@
         <Button
             android:id="@+id/btn_red"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="1" />
 
         <Button
             android:id="@+id/btn_blue"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="2" />
 
         <Button
             android:id="@+id/btn_cyan"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="3" />
 
         <Button
             android:id="@+id/btn_dkgray"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="4" />
 
         <Button
             android:id="@+id/btn_green"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="5" />
 
         <Button
             android:id="@+id/btn_magenta"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="6" />
 
         <Button
             android:id="@+id/btn_yellow"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="7" />
 
         <Button
             android:id="@+id/btn_ltggay"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="8" />
     </LinearLayout>
 
@@ -142,35 +165,37 @@
         android:id="@+id/bomll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/btn_intent"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="30°旋转" />
 
         <Button
 
             android:id="@+id/btn_light"
-            android:text="亮度调节"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_height="wrap_content" />
+            android:text="亮度调节" />
+
         <Button
             android:id="@+id/btn3"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
 
             android:text="上下镜像" />
 
         <Button
             android:id="@+id/btn_left"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
 
             android:text="左右镜像" />
     </LinearLayout>
