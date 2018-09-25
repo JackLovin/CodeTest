@@ -25,6 +25,7 @@ import com.google.zxing.oned.EAN8Writer;
 import com.google.zxing.oned.ITFWriter;
 import com.google.zxing.oned.UPCAWriter;
 import com.google.zxing.oned.UPCEWriter;
+import com.google.zxing.pdf417.PDF417Writer;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
@@ -41,7 +42,7 @@ public class QRCodeUtil {
 
     /**
      * 根据指定内容生成自定义宽高的二维码图片
-     *
+     * <p>
      * param logoBm
      * logo图标
      * param content
@@ -53,8 +54,7 @@ public class QRCodeUtil {
      * throws WriterException
      * 生成二维码异常
      */
-    public static Bitmap makeQRImage(Bitmap logoBmp, String content,
-                                     int QR_WIDTH, int QR_HEIGHT) throws WriterException {
+    public static Bitmap makeQRImage(Bitmap logoBmp, String content, int QR_WIDTH, int QR_HEIGHT) throws WriterException {
         try {
             // 图像数据转换，使用了矩阵转换
             Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
@@ -101,7 +101,7 @@ public class QRCodeUtil {
 //            }
             // 图片绘制在二维码中央，合成二维码图片
             // logo大小为二维码整体大小的1/5
-          //  float scaleFactor = QR_WIDTH * 1.0f / 5 / logoWidth;
+            //  float scaleFactor = QR_WIDTH * 1.0f / 5 / logoWidth;
             try {
                 Canvas canvas = new Canvas(bitmap);
                 canvas.drawBitmap(bitmap, 0, 0, null);
@@ -121,21 +121,7 @@ public class QRCodeUtil {
         }
         return null;
     }
-    /**
-     * 获取十六进制的颜色代码.例如 "#6E36B4" , For HTML ,
-     * @return String
-     */
-    public static String getRandColorCode(){
-        String r,g,b;
-        Random random = new Random();
-        r = Integer.toHexString(random.nextInt(256)).toUpperCase();
-        g = Integer.toHexString(random.nextInt(256)).toUpperCase();
-        b = Integer.toHexString(random.nextInt(256)).toUpperCase();
-        r = r.length()==1 ? "0" + r : r ;
-        g = g.length()==1 ? "0" + g : g ;
-        b = b.length()==1 ? "0" + b : b ;
-        return r+g+b;
-    }
+
     /**
      * 生成二维码Bitmap
      *
@@ -161,7 +147,7 @@ public class QRCodeUtil {
      * BarcodeFormat.UPC_A; // 统一产品代码A:12位数字,最后一位为校验位
      * BarcodeFormat.UPC_EAN_EXTENSION;
      */
-    public static Bitmap createQRImage(String content, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
+    public static Bitmap createQRImage(String content,int color, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
         try {
             if (content == null || "".equals(content)) {
                 return null;
@@ -184,7 +170,7 @@ public class QRCodeUtil {
             for (int y = 0; y < heightPix; y++) {
                 for (int x = 0; x < widthPix; x++) {
                     if (bitMatrix.get(x, y)) {
-                        pixels[y * widthPix + x] = 0xff000000;
+                        pixels[y * widthPix + x] = color;
                     } else {
                         pixels[y * widthPix + x] = 0xffffffff;
                     }
@@ -213,7 +199,7 @@ public class QRCodeUtil {
         return null;
     }
 
-    public static Bitmap createMultiFormatImage(String content, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
+    public static Bitmap createMultiFormatImage(String content,int color, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
         try {
             if (content == null || "".equals(content)) {
                 return null;
@@ -236,7 +222,7 @@ public class QRCodeUtil {
             for (int y = 0; y < heightPix; y++) {
                 for (int x = 0; x < widthPix; x++) {
                     if (bitMatrix.get(x, y)) {
-                        pixels[y * widthPix + x] = 0xff000000;
+                        pixels[y * widthPix + x] = color;
                     } else {
                         pixels[y * widthPix + x] = 0xffffffff;
                     }
@@ -265,7 +251,7 @@ public class QRCodeUtil {
         return null;
     }
 
-    public static Bitmap createEAN13WriterImage(String content, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
+    public static Bitmap createEAN13WriterImage(String content,int color, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
         try {
             if (content == null || "".equals(content)) {
                 return null;
@@ -288,7 +274,7 @@ public class QRCodeUtil {
             for (int y = 0; y < heightPix; y++) {
                 for (int x = 0; x < widthPix; x++) {
                     if (bitMatrix.get(x, y)) {
-                        pixels[y * widthPix + x] = 0xff000000;
+                        pixels[y * widthPix + x] = color;
                     } else {
                         pixels[y * widthPix + x] = 0xffffffff;
                     }
@@ -317,7 +303,7 @@ public class QRCodeUtil {
         return null;
     }
 
-    public static Bitmap createEAN8WriterImage(String content, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
+    public static Bitmap createEAN8WriterImage(String content,int color, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
         try {
             if (content == null || "".equals(content)) {
                 return null;
@@ -340,7 +326,7 @@ public class QRCodeUtil {
             for (int y = 0; y < heightPix; y++) {
                 for (int x = 0; x < widthPix; x++) {
                     if (bitMatrix.get(x, y)) {
-                        pixels[y * widthPix + x] = 0xff000000;
+                        pixels[y * widthPix + x] = color;
                     } else {
                         pixels[y * widthPix + x] = 0xffffffff;
                     }
@@ -369,7 +355,7 @@ public class QRCodeUtil {
         return null;
     }
 
-    public static Bitmap createUPC_EImage(String content, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
+    public static Bitmap createUPC_EImage(String content,int color, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
         try {
             if (content == null || "".equals(content)) {
                 return null;
@@ -392,7 +378,7 @@ public class QRCodeUtil {
             for (int y = 0; y < heightPix; y++) {
                 for (int x = 0; x < widthPix; x++) {
                     if (bitMatrix.get(x, y)) {
-                        pixels[y * widthPix + x] = 0xff000000;
+                        pixels[y * widthPix + x] = color;
                     } else {
                         pixels[y * widthPix + x] = 0xffffffff;
                     }
@@ -421,7 +407,7 @@ public class QRCodeUtil {
         return null;
     }
 
-    public static Bitmap createUPC_AImage(String content, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
+    public static Bitmap createUPC_AImage(String content,int color, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
         try {
             if (content == null || "".equals(content)) {
                 return null;
@@ -444,7 +430,7 @@ public class QRCodeUtil {
             for (int y = 0; y < heightPix; y++) {
                 for (int x = 0; x < widthPix; x++) {
                     if (bitMatrix.get(x, y)) {
-                        pixels[y * widthPix + x] = 0xff000000;
+                        pixels[y * widthPix + x] = color;
                     } else {
                         pixels[y * widthPix + x] = 0xffffffff;
                     }
@@ -473,7 +459,7 @@ public class QRCodeUtil {
         return null;
     }
 
-    public static Bitmap createITFImage(String content, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
+    public static Bitmap createITFImage(String content,int color, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
         try {
             if (content == null || "".equals(content)) {
                 return null;
@@ -496,7 +482,7 @@ public class QRCodeUtil {
             for (int y = 0; y < heightPix; y++) {
                 for (int x = 0; x < widthPix; x++) {
                     if (bitMatrix.get(x, y)) {
-                        pixels[y * widthPix + x] = 0xff000000;
+                        pixels[y * widthPix + x] = color;
                     } else {
                         pixels[y * widthPix + x] = 0xffffffff;
                     }
@@ -525,7 +511,7 @@ public class QRCodeUtil {
         return null;
     }
 
-    public static Bitmap createcode39Image(String content, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
+    public static Bitmap createcode39Image(String content,int color, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
         try {
             if (content == null || "".equals(content)) {
                 return null;
@@ -548,7 +534,7 @@ public class QRCodeUtil {
             for (int y = 0; y < heightPix; y++) {
                 for (int x = 0; x < widthPix; x++) {
                     if (bitMatrix.get(x, y)) {
-                        pixels[y * widthPix + x] = 0xff000000;
+                        pixels[y * widthPix + x] = color;
                     } else {
                         pixels[y * widthPix + x] = 0xffffffff;
                     }
@@ -577,7 +563,7 @@ public class QRCodeUtil {
         return null;
     }
 
-    public static Bitmap createcode93Image(String content, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
+    public static Bitmap createcode93Image(String content,int color, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
         try {
             if (content == null || "".equals(content)) {
                 return null;
@@ -600,7 +586,7 @@ public class QRCodeUtil {
             for (int y = 0; y < heightPix; y++) {
                 for (int x = 0; x < widthPix; x++) {
                     if (bitMatrix.get(x, y)) {
-                        pixels[y * widthPix + x] = 0xff000000;
+                        pixels[y * widthPix + x] = color;
                     } else {
                         pixels[y * widthPix + x] = 0xffffffff;
                     }
@@ -629,7 +615,7 @@ public class QRCodeUtil {
         return null;
     }
 
-    public static Bitmap createDATA_MATRIXImage(String content, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
+    public static Bitmap createDATA_MATRIXImage(String content, int color,BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
         try {
             if (content == null || "".equals(content)) {
                 return null;
@@ -652,7 +638,59 @@ public class QRCodeUtil {
             for (int y = 0; y < heightPix; y++) {
                 for (int x = 0; x < widthPix; x++) {
                     if (bitMatrix.get(x, y)) {
-                        pixels[y * widthPix + x] = 0xff000000;
+                        pixels[y * widthPix + x] = color;
+                    } else {
+                        pixels[y * widthPix + x] = 0xffffffff;
+                    }
+                }
+            }
+
+            // 生成二维码图片的格式，使用ARGB_8888
+            Bitmap bitmap = Bitmap.createBitmap(widthPix, heightPix, Bitmap.Config.ARGB_8888);
+            bitmap.setPixels(pixels, 0, widthPix, 0, 0, widthPix, heightPix);
+
+            if (logoBm != null) {
+                bitmap = addLogo(bitmap, logoBm);
+            }
+
+            if (filePath == null) {
+                return bitmap;
+            }
+
+            // 必须使用compress方法将bitmap保存到文件中再进行读取。直接返回的bitmap是没有任何压缩的，内存消耗巨大！
+            if (bitmap != null && bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(filePath)))
+                return BitmapFactory.decodeFile(filePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Bitmap createPDF417Image(String content,int color, BarcodeFormat barcodeFormat, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
+        try {
+            if (content == null || "".equals(content)) {
+                return null;
+            }
+            // 配置参数
+            Map<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>();
+            hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+            // 容错级别
+            hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+            // 设置空白边距的宽度
+            hints.put(EncodeHintType.MARGIN, 0); //default is 4
+
+
+            // 图像数据转换，使用了矩阵转换
+            //  BitMatrix bitMatrix = new QRCodeWriter().encode(content, BarcodeFormat.QR_CODE, widthPix, heightPix, hints);
+            BitMatrix bitMatrix = new PDF417Writer().encode(content, barcodeFormat, widthPix, heightPix, hints);
+            int[] pixels = new int[widthPix * heightPix];
+            // 下面这里按照二维码的算法，逐个生成二维码的图片，
+            // 两个for循环是图片横列扫描的结果
+            for (int y = 0; y < heightPix; y++) {
+                for (int x = 0; x < widthPix; x++) {
+                    if (bitMatrix.get(x, y)) {//0xff000000
+                        pixels[y * widthPix + x] = color;
                     } else {
                         pixels[y * widthPix + x] = 0xffffffff;
                     }

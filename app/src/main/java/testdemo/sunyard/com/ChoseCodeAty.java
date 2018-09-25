@@ -43,7 +43,7 @@ public class ChoseCodeAty extends Activity implements OnItemClickListener {
         stringList.add("EAN_13");
         stringList.add("ITF");
        // stringList.add("MAXICODE");
-      //  stringList.add("PDF_417");
+        stringList.add("PDF_417");
         stringList.add("QR_CODE");
       //  stringList.add("RSS_14");
       //  stringList.add("RSS_EXPANDED");
@@ -105,7 +105,9 @@ public class ChoseCodeAty extends Activity implements OnItemClickListener {
 
                 break;
             case "PDF_417":
-
+                intent = new Intent(this, CodeActivity.class);
+                intent.putExtra("choseCode", "PDF_417");
+                startActivity(intent);
                 break;
             case "QR_CODE":
                  intent = new Intent(this, CodeActivity.class);
