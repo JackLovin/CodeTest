@@ -22,7 +22,9 @@ import testdemo.sunyard.com.util.DividerItemDecoration;
 
 public class RecycviewBitmapAty extends Activity implements OnItemClickListener {
     RecyclerView recyclerviewBitmap;
-    int[] bitarr = {R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher};
+    int[] bitarr = {R.drawable.a, R.drawable.b, R.drawable.c, R.drawable.d, R.drawable.e
+            , R.drawable.f, R.drawable.g, R.drawable.h, R.drawable.i, R.drawable.j
+            , R.drawable.k, R.drawable.l, R.drawable.m, R.drawable.n};
     BitRecycleViewAdapter bitRecycleViewAdapter;
     List<Integer> integerList;
     @Override

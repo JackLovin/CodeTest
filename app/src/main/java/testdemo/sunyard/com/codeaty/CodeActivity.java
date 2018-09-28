@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,7 +35,7 @@ import testdemo.sunyard.com.util.QRCodeUtil;
 
 public class CodeActivity extends Activity implements View.OnClickListener {
     ImageView imageView;
-    Button btnRed, btnBule, btnCYAN, btnDKGRAY, btnLTGRAY, btnMAGENTA, btnYELLOW, btnGREEN;
+    Button btnRed, btnBule, btnCYAN,btnRotate, btnDKGRAY, btnLTGRAY, btnMAGENTA, btnYELLOW, btnGREEN;
     int Degree;
     Button btnLeftRight, btnLight;
     String s;
@@ -161,9 +162,9 @@ public class CodeActivity extends Activity implements View.OnClickListener {
                 imageView.setImageBitmap(bitmap);
                 break;
             case "PDF_417":
-                bitmap = QRCodeUtil.createPDF417Image("0123aB", color, BarcodeFormat.PDF_417, 500, 300, null, null);
-                tvCodeContent.setText("0123aB");
-                imageView.setImageBitmap(bitmap);
+//                bitmap = QRCodeUtil.createPDF417Image("0123aB", color, BarcodeFormat.PDF_417, 500, 300, null, null);
+//                tvCodeContent.setText("0123aB");
+//                imageView.setImageBitmap(bitmap);
                 break;
         }
     }
@@ -186,6 +187,8 @@ public class CodeActivity extends Activity implements View.OnClickListener {
         btnLTGRAY.setOnClickListener(this);
         btnDKGRAY.setOnClickListener(this);
         btnCYAN.setOnClickListener(this);
+        btnRotate = findViewById(R.id.btn_rotate);
+        btnRotate.setOnClickListener(this);
         btnMAGENTA.setOnClickListener(this);
         tvCodeContent = findViewById(R.id.code_content);
         imageView = findViewById(R.id.img);
@@ -214,12 +217,24 @@ public class CodeActivity extends Activity implements View.OnClickListener {
 
     int brightness;
 
+    boolean isRotate;
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
 
-            case R.id.btn_light:
+            case R.id.btn_rotate:
+                if(!isRotate){
 
+                    imageView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotaterepeat));
+                    isRotate=true;
+                }else {
+                    imageView.clearAnimation();
+                    isRotate=false;
+                }
+
+                break;
+            case R.id.btn_light:
+               //
                 if (brightness > 100) {
                     brightness = 0;
                     return;

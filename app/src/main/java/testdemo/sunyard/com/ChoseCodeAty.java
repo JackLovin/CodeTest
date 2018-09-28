@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,9 +110,10 @@ public class ChoseCodeAty extends Activity implements OnItemClickListener {
 
                 break;
             case "PDF_417":
-                intent = new Intent(this, CodeActivity.class);
-                intent.putExtra("choseCode", "PDF_417");
-                startActivity(intent);
+                Toast.makeText(getApplicationContext(),"待定",Toast.LENGTH_SHORT).show();
+//                intent = new Intent(this, CodeActivity.class);
+//                intent.putExtra("choseCode", "PDF_417");
+//                startActivity(intent);
                 break;
             case "QR_CODE":
                  intent = new Intent(this, CodeActivity.class);
